@@ -7,6 +7,7 @@ const armorManager = require('mineflayer-armor-manager')
 const mc = require('minecraft-protocol');
 const AutoAuth = require('mineflayer-auto-auth');
 const app = express();
+const { exec } = require("child_process");
 
 app.use(express.json());
 
@@ -42,10 +43,13 @@ bot.on('kicked', (reason) => {
 });
 
 bot.on('error', console.log)
-bot.on('end', () => {
-  console.log("Bot Desconectado! Esperando 10 segundos para reconectar...");
-  setTimeout(createBot, 10000) // 10 segundos antes de reconectar
-})
+bot.on("end", () => {
+  console.log("Reiniciando o bot automático!");
+  exec(`curl -X POST https://api.render.com/v1/services/srv-cv3jak7noe9s73c3f64g/deploys \
+  -H "Authorization: Bearer rnd_ZFRMqoK1vuvJ3fH5WQ44JzK9BbDu" \
+  -H "Content-Type: application/json" \
+  -d '{}'`);
+});
 
 }
 
