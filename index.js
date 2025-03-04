@@ -36,9 +36,17 @@ bot.loadPlugin(pvp)
 bot.loadPlugin(armorManager)
 bot.loadPlugin(pathfinder)
 
-bot.on('kicked', console.log)
+bot.on('kicked', (reason) => {
+  console.log(`Bot foi kickado: ${reason}`);
+  setTimeout(createBot, 10000) // 10 segundos antes de reconectar
+});
+
 bot.on('error', console.log)
-bot.on('end', createBot)
+bot.on('end', () => {
+  console.log("Bot Desconectado! Esperando 10 segundos para reconectar...");
+  setTimeout(createBot, 10000) // 10 segundos antes de reconectar
+})
+
 }
 
 createBot()
